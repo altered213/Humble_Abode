@@ -2,28 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
-    public Vector3[] Waypoints;
-    public int currentDestination;
+   public Transform[] Waypoints;
+    public int CurrentDestination = 0;
     public float Speed = 2;
-    public float WaypointAcceptableError = 0.015f;
+    public float WaypointAcceptableError = 0.01f;
     // Start is called before the first frame update
     void Start()
     {
-        currentDestination = 0;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (currentDestination >= Waypoints.Length) return;
-        transform.position = Vector3.MoveTowards(transform.position, Waypoints[currentDestination], Speed + Time.deltaTime);
-        transform.LookAt(Waypoints[currentDestination]);
-
-        if (Vector3.Distance(Transform.position, Waypoints[currentDestination].position) <= WaypointAcceptableError)
-        {
-            currentDestination++;
-        }
+        if (CurrentDestination >= Waypoints.Length)
+            return;
+        transform.position = Vector3.MoveTowards(transform.position, Waypoints[CurrentDestination].position, Speed * Time.deltaTime);
+        transform.LookAt(Waypoints[CurrentDestination].position);
+        if (Vector3.Distance(transform.position, Waypoints[CurrentDestination].position) <= WaypointAcceptableError)
+            {
+            CurrentDestination++;
+            }
     }
 }
